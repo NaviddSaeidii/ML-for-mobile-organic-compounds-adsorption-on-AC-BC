@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Modelling adsorption of mobile organic compounds (log KOC < 4) in activated carbon and biochar using machine learning."
+authors:
+  - family-names: "<LastName>"
+    given-names: "<FirstName>"
+    orcid: "https://orcid.org/0000-0003-1666-2546"
+version: "0.1.0"
+date-released: "<YYYY-MM-DD>"
+doi: "<add DOI if available>"
+license: "MIT"
+repository-code: "https://github.com/<your-username>/ml-mobile-organics-adsorption-ac-bc"
