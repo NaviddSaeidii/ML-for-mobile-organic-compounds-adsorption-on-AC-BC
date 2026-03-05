@@ -115,61 +115,35 @@ def save_metrics(r2_scores: dict, rmse_scores: dict) -> None:
     print(metrics_df.to_string(index=False))
 
 
-def plot_all_models(y_test: pd.Series, predictions: dict, r2_scores: dict, rmse_scores: dict) -> None:
-    plt.figure(figsize=FIGSIZE, dpi=DPI)
-    plt.plot([AX_MIN, AX_MAX], [AX_MIN, AX_MAX], "k--", lw=3, label="1:1 line")
-
-    for name in MODEL_ORDER:
-        plt.scatter(
-            y_test,
-            predictions[name],
-            s=POINT_SIZE,
-            marker=MARKERS[name],
-            color=COLORS[name],
-            edgecolor="k",
-            linewidths=0.6,
-            alpha=0.9,
-            label=f"{name} (R² = {r2_scores[name]:.2f}, RMSE = {rmse_scores[name]:.2f})",
-        )
-
-    plt.xlabel("Actual log Kd (L/kg)")
-    plt.ylabel("Predicted log Kd (L/kg)")
-    plt.xlim(AX_MIN, AX_MAX)
-    plt.ylim(AX_MIN, AX_MAX)
-    plt.title(f"Predicted vs Actual log Kd — All Models | N = {len(y_test)}")
-    plt.grid(True, linewidth=0.6, alpha=0.6)
-    plt.legend(frameon=True, loc="upper left")
-    plt.tight_layout()
-    plt.savefig("predicted_vs_actual_logKd_final_repeat2_seed42_all.png", dpi=DPI, bbox_inches="tight")
-    plt.close()
-
-
-def plot_random_forest_only(y_test: pd.Series, predictions: dict, r2_scores: dict, rmse_scores: dict) -> None:
+def plot_single_model(y_test: pd.Series, predictions: dict, r2_scores: dict, rmse_scores: dict, model_name: str) -> None:
     plt.figure(figsize=FIGSIZE, dpi=DPI)
     plt.plot([AX_MIN, AX_MAX], [AX_MIN, AX_MAX], "k--", lw=3, label="1:1 line")
 
     plt.scatter(
         y_test,
-        predictions["Random Forest"],
+        predictions[model_name],
         s=POINT_SIZE,
-        marker=MARKERS["Random Forest"],
-        color=COLORS["Random Forest"],
+        marker=MARKERS[model_name],
+        color=COLORS[model_name],
         edgecolor="black",
         linewidths=0.6,
         alpha=0.9,
-        label=f"Random Forest (R² = {r2_scores['Random Forest']:.2f}, RMSE = {rmse_scores['Random Forest']:.2f})",
+        label=f"{model_name} (R² = {r2_scores[model_name]:.2f}, RMSE = {rmse_scores[model_name]:.2f})",
     )
 
     plt.xlabel("Actual log Kd (L/kg)")
     plt.ylabel("Predicted log Kd (L/kg)")
     plt.xlim(AX_MIN, AX_MAX)
     plt.ylim(AX_MIN, AX_MAX)
-    plt.title(f"Random Forest: Predicted vs Actual log Kd | N = {len(y_test)}")
+    plt.title(f"{model_name}: Predicted vs Actual log Kd | N = {len(y_test)}")
     plt.grid(True, linewidth=0.6, alpha=0.6)
     plt.legend(frameon=True, loc="upper left")
     plt.tight_layout()
-    plt.savefig("predicted_vs_actual_logKd_final_repeat2_seed42_rf.png", dpi=DPI, bbox_inches="tight")
+
+    filename = f"predicted_vs_actual_logKd_final_repeat2_seed42_{model_name.replace(' ', '_').lower()}.png"
+    plt.savefig(filename, dpi=DPI, bbox_inches="tight")
     plt.close()
+    print(f"Saved: {filename}")
 
 
 def main() -> None:
@@ -198,11 +172,10 @@ def main() -> None:
     predictions, r2_scores, rmse_scores = evaluate_models(models, X_test_s, y_test)
 
     save_metrics(r2_scores, rmse_scores)
-    plot_all_models(y_test, predictions, r2_scores, rmse_scores)
-    plot_random_forest_only(y_test, predictions, r2_scores, rmse_scores)
 
-    print("Saved: predicted_vs_actual_logKd_final_repeat2_seed42_all.png")
-    print("Saved: predicted_vs_actual_logKd_final_repeat2_seed42_rf.png")
+    for model_name in MODEL_ORDER:
+        plot_single_model(y_test, predictions, r2_scores, rmse_scores, model_name)
+
     print("Saved: true_metrics_all_models_repeat2_seed42.csv")
 
 
