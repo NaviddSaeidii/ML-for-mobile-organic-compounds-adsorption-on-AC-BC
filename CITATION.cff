@@ -12,7 +12,8 @@ keywords:
   - activated carbon
   - biochar
   - machine learning
-  - PFAS
+  - mobile organic compounds
+  - mobile PFAS 
   - water treatment
 license: "MIT"
 version: "1.0.0"
