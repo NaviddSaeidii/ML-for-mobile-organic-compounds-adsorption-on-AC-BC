@@ -1,0 +1,16 @@
+name: adsorption-ml
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - shap
+  - dcor
+  - joblib
+  - openpyxl
+  - jupyterlab
+  - pip
