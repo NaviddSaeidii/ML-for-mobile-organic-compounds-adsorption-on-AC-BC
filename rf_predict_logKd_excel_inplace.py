@@ -2,32 +2,13 @@
 """
 Random Forest predictor for log Kd (L/kg), seed=42, NO imputation.
 
+Prediction-only version:
+- uses engineered variables for aromaticity and charge state
+- reads descriptors from an Excel file
+- predicts log Kd values
+- writes predicted log Kd values into column M of the same Excel file
 
-Usage:
-    python rf_predict_logKd_excel_inplace.py
-    python rf_predict_logKd_excel_inplace.py --train
-    python rf_predict_logKd_excel_inplace.py --training "cleaned_with_deltaPZCpH_no planar.xlsx" --input "Prediction_Input_Template.xlsx"
-
-Artifacts created on training:
-    - rf_model_seed42_no_impute.joblib
-    - scaler_seed42_no_impute.joblib
-    - feature_names_seed42_no_impute.joblib
-
-Behavior:
-    * Training:
-      - loads the training Excel
-      - engineers aromaticity and charge-state variables
-      - drops rows with NaN/±inf ONLY (no filling)
-      - fits StandardScaler on TRAIN DATA
-      - trains RF (n_estimators=200, random_state=42)
-      - saves model artifacts
-    * Prediction:
-      - reads the input Excel
-      - engineers the same variables
-      - checks required columns and numeric values
-      - applies saved scaler/model
-      - writes predictions to a new column
-        'pred_log Kd (L/kg)' in the SAME file after making a .backup.xlsx copy
+No plots are created.
 """
 
 import argparse
@@ -42,14 +23,14 @@ from openpyxl import load_workbook
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 
-# ===== Base paths =====
 SCRIPT_DIR = Path(__file__).resolve().parent
 
-# ===== Filenames =====
 TRAINING_EXCEL = SCRIPT_DIR / "cleaned_with_deltaPZCpH_no planar.xlsx"
 INPUT_EXCEL = SCRIPT_DIR / "Prediction_Input_Template.xlsx"
+
 TARGET_COL = "log Kd (L/kg)"
 PRED_COL = "pred_log Kd (L/kg)"
+PRED_COL_INDEX = 13   # Column M
 
 MODEL_PATH = SCRIPT_DIR / "rf_model_seed42_no_impute.joblib"
 SCALER_PATH = SCRIPT_DIR / "scaler_seed42_no_impute.joblib"
@@ -58,7 +39,6 @@ FEATS_PATH = SCRIPT_DIR / "feature_names_seed42_no_impute.joblib"
 SEED = 42
 
 
-# ===== Utilities =====
 def _resolve_path(path_str: str) -> Path:
     path = Path(path_str)
     if not path.is_absolute():
@@ -75,26 +55,19 @@ def _read_excel_frame(excel_path: Path) -> pd.DataFrame:
 def _find_charge_columns(df: pd.DataFrame) -> tuple[str, str]:
     positive_candidates = [col for col in df.columns if "positive charge" in col.lower()]
     negative_candidates = [col for col in df.columns if "negative charge" in col.lower()]
-
     if not positive_candidates or not negative_candidates:
         raise ValueError(
             "Could not detect the positive and negative charge columns automatically. "
             "Please include columns such as 'positive charges' and 'negative charges'."
         )
-
     return positive_candidates[0], negative_candidates[0]
 
 
 def _engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     work = df.copy()
 
-    required_raw = ["number of aromatic rings"]
-    missing_raw = [col for col in required_raw if col not in work.columns]
-    if missing_raw:
-        raise ValueError(
-            f"Missing required column(s) for engineered variables: {missing_raw}. "
-            "The input file must contain these raw columns."
-        )
+    if "number of aromatic rings" not in work.columns:
+        raise ValueError("The input file must contain 'number of aromatic rings'.")
 
     positive_col, negative_col = _find_charge_columns(work)
 
@@ -110,7 +83,6 @@ def _engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     work["charge_state_neutral"] = ((work[positive_col] == 0) & (work[negative_col] == 0)).astype(float)
     work["charge_state_zwitterionic"] = ((work[positive_col] == 1) & (work[negative_col] == 1)).astype(float)
 
-    # Drop the raw columns that were converted into engineered variables
     work = work.drop(columns=[positive_col, negative_col, "number of aromatic rings"], errors="ignore")
     return work
 
@@ -173,16 +145,11 @@ def ensure_model(training_path: Path, force_retrain: bool = False):
     return load_artifacts()
 
 
-# ===== Prediction helpers =====
 def align_features(df_in: pd.DataFrame, required_cols):
-    """
-    Engineer variables, keep required_cols in order, coerce to numeric,
-    and raise informative errors if values are missing/non-numeric.
-    """
     work = df_in.replace([np.inf, -np.inf], np.nan).copy()
     work = _engineer_features(work)
 
-    extra = [c for c in work.columns if c not in required_cols]
+    extra = [c for c in work.columns if c not in required_cols and c != TARGET_COL]
     if extra:
         warnings.warn(f"Ignoring extra columns not used by model: {extra}")
 
@@ -200,9 +167,7 @@ def align_features(df_in: pd.DataFrame, required_cols):
     bad = X.isna()
     if bad.any().any():
         rows, cols = np.where(bad.values)
-        details = []
-        for r, cidx in zip(rows, cols):
-            details.append(f"(row {r+2}, column '{required_cols[cidx]}')")
+        details = [f"(row {r+2}, column '{required_cols[cidx]}')" for r, cidx in zip(rows, cols)]
         raise ValueError(
             "Found non-numeric or missing values in the prediction input at: "
             + ", ".join(details)
@@ -220,20 +185,13 @@ def write_predictions_inplace(xlsx_path: Path, preds):
     wb = load_workbook(xlsx_path)
     ws = wb.worksheets[0]
 
-    headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
-    if PRED_COL in headers:
-        col_idx = headers.index(PRED_COL) + 1
-    else:
-        col_idx = len(headers) + 1
-        ws.cell(row=1, column=col_idx, value=PRED_COL)
-
+    ws.cell(row=1, column=PRED_COL_INDEX, value=PRED_COL)
     for i, p in enumerate(preds, start=2):
-        ws.cell(row=i, column=col_idx, value=float(p))
+        ws.cell(row=i, column=PRED_COL_INDEX, value=float(p))
 
     wb.save(xlsx_path)
 
 
-# ===== Main =====
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--train", action="store_true", help="Force retraining from the training Excel")
@@ -258,7 +216,7 @@ def main():
     print(f"Backup created: {backup.name}")
 
     write_predictions_inplace(input_path, preds)
-    print(f"Predictions written into {input_path.name}, column '{PRED_COL}'")
+    print(f"Predictions written into {input_path.name}, column M ('{PRED_COL}')")
 
 
 if __name__ == "__main__":
