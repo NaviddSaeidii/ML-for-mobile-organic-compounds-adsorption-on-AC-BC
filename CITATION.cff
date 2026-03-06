@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: "Saeidi"
     given-names: "Navid"
-repository-code: "https://github.com/NavidSaeidi/modeling-adsorption-of-mobile-organic-compounds"
+repository-code: "https://github.com/NaviddSaeidii/ML-for-mobile-organic-compounds-adsorption-on-AC-BC"
 abstract: "Code and data for interpretable machine-learning modeling of adsorption of mobile organic compounds on activated carbon and biochar."
 keywords:
   - adsorption
