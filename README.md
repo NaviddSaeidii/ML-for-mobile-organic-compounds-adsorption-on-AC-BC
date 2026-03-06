@@ -69,7 +69,7 @@ Run model comparison:
 python "train_compare_models.py"
 ```
 
-Run detailed Random Forest analysis (first creat the conda environment, then run the analysis):
+Run detailed Random Forest analysis (first create the conda environment, then run the analysis):
 
 ```bash
 python "RF_full_analysis.py"
@@ -84,7 +84,7 @@ python "rf_predict_logKd_excel_inplace.py"
 ## Prediction workflow
 
 1. Open `Prediction_Input_Template.xlsx`
-2. Enter the required input descriptor(s) for the new compounds and adsorbents. It works for one single row of inputs (for one adsorption) or for a series of inputs (several adsorptions). 
+2. Enter the required input descriptor(s) for the new compounds and adsorbents. It works for one single row of inputs (for one adsorption) or for a series of inputs (several adsorptions). The Excel file must contain at least one completed input row before running the prediction script. On completed input row was mentioned in the excel file as example. 
 3. Save the file
 4. Run:
 
