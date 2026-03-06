@@ -84,7 +84,7 @@ python "rf_predict_logKd_excel_inplace.py"
 ## Prediction workflow
 
 1. Open `Prediction_Input_Template.xlsx`
-2. Enter the required input descriptor(s) for the new compounds and adsorbents. It works for one signle row of inputs (for one adsorption) or for a series of inputs (several adsorptions).
+2. Enter the required input descriptor(s) for the new compounds and adsorbents. It works for one signle row of inputs (for one adsorption) or for a series of inputs (several adsorptions). 
 3. Save the file
 4. Run:
 
@@ -92,7 +92,7 @@ python "rf_predict_logKd_excel_inplace.py"
 python "rf_predict_logKd_excel_inplace.py"
 ```
 
-The script writes the predicted log Kd values back into the Excel file.
+The script writes the predicted log Kd values back into the Excel file (in column M).
 
 ## Notes on reproducibility
 
