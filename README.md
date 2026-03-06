@@ -103,7 +103,6 @@ The script writes the predicted log Kd values back into the Excel file.
 
 ## Data and licensing
 
-Code license: see `LICENSE`  
 Data license: see `LICENSE-Data`
 
 ## Citation
