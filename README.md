@@ -69,7 +69,7 @@ Run model comparison:
 python "train_compare_models.py"
 ```
 
-Run detailed Random Forest analysis:
+Run detailed Random Forest analysis (first creat the conda environment, then run the analysis):
 
 ```bash
 python "RF_full_analysis.py"
