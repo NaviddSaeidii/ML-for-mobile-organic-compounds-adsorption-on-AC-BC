@@ -2,7 +2,7 @@
 
 This repository contains the code and data supporting the manuscript:
 
-Saeidi, N., et al. “Modeling adsorption of mobile organic compounds on activated carbon and biochar using machine learning”.
+Saeidi, Navid, et al. “Modeling adsorption of mobile organic compounds on activated carbon and biochar using machine learning”.
 
 ## Overview
 
