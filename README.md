@@ -12,7 +12,7 @@ The modeling framework combines molecular descriptors with adsorbent descriptors
 
 ## Repository contents
 
-- `3 models.py`  
+- `train_compare_models.py`  
   Trains and compares Random Forest, Ridge, and SVR models using the main processed dataset.
 
 - `RF_full_analysis.py`  
@@ -66,7 +66,7 @@ conda activate adsorption-ml
 Run model comparison:
 
 ```bash
-python "3 models.py"
+python "train_compare_models.py"
 ```
 
 Run detailed Random Forest analysis:
