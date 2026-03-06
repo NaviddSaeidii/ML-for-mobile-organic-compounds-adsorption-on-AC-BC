@@ -30,7 +30,7 @@ MODEL_ORDER = ["Random Forest", "Ridge", "SVR"]
 MARKERS = {"Random Forest": "o", "Ridge": "s", "SVR": "^"}
 COLORS = {"Random Forest": "#1f77b4", "Ridge": "#2ca02c", "SVR": "#d62728"}
 
-mpl.rcParams["font.family"] = "Arial"
+mpl.rcParams["font.family"] = "DejaVu Sans"
 mpl.rcParams["font.size"] = 12
 mpl.rcParams["axes.titlesize"] = 16
 mpl.rcParams["axes.labelsize"] = 14
