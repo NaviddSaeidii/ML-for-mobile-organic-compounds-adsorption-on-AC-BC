@@ -4,7 +4,7 @@
 Random Forest predictor for log Kd (L/kg), seed=42, NO imputation.
 
 Usage (default filenames):
-    python rf_predict_logKd_excel_inplace_no_impute_seed42.py [--train]
+    python rf_predict_logKd_excel_inplace.py [--train]
     # --train forces retraining from the training Excel
 
 Artifacts created on training:
