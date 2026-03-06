@@ -14,7 +14,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-EXCEL_PATH = Path("cleaned_with_deltaPZCpH_no planar.xlsx")
+SCRIPT_DIR = Path(__file__).resolve().parent
+EXCEL_PATH = SCRIPT_DIR / "cleaned_with_deltaPZCpH_no planar.xlsx"
 TARGET_COL = "log Kd (L/kg)"
 TEST_SIZE = 0.2
 SEED = 42
@@ -40,28 +41,57 @@ def rmse(y_true: pd.Series, y_pred: np.ndarray) -> float:
     return float(np.sqrt(mean_squared_error(y_true, y_pred)))
 
 
+def make_unique_columns(columns) -> list[str]:
+    counts = {}
+    new_cols = []
+    for col in columns:
+        counts[col] = counts.get(col, 0) + 1
+        if counts[col] == 1:
+            new_cols.append(col)
+        else:
+            new_cols.append(f"{col}.{counts[col]}")
+    return new_cols
+
+
+def find_charge_columns(df: pd.DataFrame) -> tuple[str, str]:
+    positive_candidates = [col for col in df.columns if "positive charge" in col.lower()]
+    negative_candidates = [col for col in df.columns if "negative charge" in col.lower()]
+    if not positive_candidates or not negative_candidates:
+        raise RuntimeError(
+            "Could not detect the positive and negative charge columns automatically. "
+            "Please include columns such as 'positive charges' and 'negative charges'."
+        )
+    return positive_candidates[0], negative_candidates[0]
+
+
 def build_feature_matrix(df: pd.DataFrame, target_col: str) -> pd.DataFrame:
     if target_col not in df.columns:
         raise KeyError(f"Target column '{target_col}' not found in the Excel file.")
 
     work = df.copy()
 
-    if "number of aromatic rings" in work.columns and "has_aromatic_ring" not in work.columns:
-        work["has_aromatic_ring"] = (work["number of aromatic rings"] >= 1).astype(int)
+    if "number of aromatic rings" not in work.columns:
+        raise RuntimeError("'number of aromatic rings' column not found.")
+
+    positive_col, negative_col = find_charge_columns(work)
+
+    work["number of aromatic rings"] = pd.to_numeric(work["number of aromatic rings"], errors="coerce")
+    work[positive_col] = pd.to_numeric(work[positive_col], errors="coerce")
+    work[negative_col] = pd.to_numeric(work[negative_col], errors="coerce")
+
+    # Engineer manuscript-style variables
+    work["has_aromatic_ring"] = (work["number of aromatic rings"] >= 1).astype(int)
+    work["has_two_aromatics"] = (work["number of aromatic rings"] >= 2).astype(int)
+    work["charge_state_anion"] = ((work[positive_col] == 0) & (work[negative_col] == 1)).astype(int)
+    work["charge_state_cation"] = ((work[positive_col] == 1) & (work[negative_col] == 0)).astype(int)
+    work["charge_state_neutral"] = ((work[positive_col] == 0) & (work[negative_col] == 0)).astype(int)
+    work["charge_state_zwitterionic"] = ((work[positive_col] == 1) & (work[negative_col] == 1)).astype(int)
+
+    # Remove raw columns converted to engineered form
+    work = work.drop(columns=[positive_col, negative_col, "number of aromatic rings"], errors="ignore")
 
     X = work.drop(columns=[target_col]).select_dtypes(include=[np.number]).copy()
-
-    if X.columns.duplicated().any():
-        counts = {}
-        new_cols = []
-        for col in X.columns:
-            counts[col] = counts.get(col, 0) + 1
-            if counts[col] == 1:
-                new_cols.append(col)
-            else:
-                new_cols.append(f"{col}.{counts[col]}")
-        X.columns = new_cols
-
+    X.columns = make_unique_columns(X.columns)
     return X
 
 
@@ -74,6 +104,11 @@ def load_dataset(excel_path: Path, target_col: str):
 
     X = build_feature_matrix(df, target_col)
     y = df[target_col].astype(float)
+
+    # Keep only rows retained in X after numeric feature extraction
+    merged = pd.concat([X, y.rename(target_col)], axis=1).dropna(axis=0, how="any").copy()
+    X = merged.drop(columns=[target_col])
+    y = merged[target_col].astype(float)
 
     return df, X, y
 
