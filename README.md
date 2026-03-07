@@ -6,7 +6,7 @@ Saeidi, Navid, et al. “Modeling adsorption of mobile organic compounds on acti
 
 ## Overview
 
-This study develops interpretable machine-learning models to predict adsorption coefficients (log Kd) of mobile organic compounds on activated carbon and biochar at environmentally relevant low concentrations. The work is based on a harmonized literature dataset with 509 log Kd values for 75 compounds, together with an independent experimental dataset containing 23 log Kd values for 14 compounds for external evaluation.
+This study develops interpretable machine-learning models to predict adsorption coefficients (log Kd) of mobile organic compounds on activated carbon and biochar at environmentally relevant low concentrations. The work is based on a harmonized literature dataset with 509 log Kd values for 74 compounds, together with an independent experimental dataset containing 23 log Kd values for 14 compounds for external evaluation.
 
 The modeling framework combines molecular descriptors with adsorbent descriptors, including specific surface area, oxygen content, and delta_PZCpH. In addition, engineered binary variables were used to represent the pH-dependent charge state and aromaticity of the adsorbate.
 
