@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+env/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+*.log
+*.tmp
+*.bak
+*.backup.xlsx
+ml_manuscript_si_outputs/
+rf_model_seed42_no_impute.joblib
+scaler_seed42_no_impute.joblib
+feature_names_seed42_no_impute.joblib
