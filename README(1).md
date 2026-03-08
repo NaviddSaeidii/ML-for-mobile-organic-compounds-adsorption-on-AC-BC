@@ -75,7 +75,7 @@ This single script performs the end-to-end workflow:
 
 ### Legacy scripts retained in the repository
 
-These files are kept for reference from the earlier repository structure, but the new manuscript workflow is now centered on the consolidated script above:
+The model can be used for predicting log Kd using the following script and excell file. In the excel file the inputs can be added (molecular properties and adsprbent properties) for one single compound (one wor of data) or for several experiments (several rows):
 
 - `train_compare_models.py`
 - `RF_full_analysis.py`
