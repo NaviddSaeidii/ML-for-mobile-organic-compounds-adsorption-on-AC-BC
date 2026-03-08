@@ -3,8 +3,7 @@ message: "If you use this repository, please cite it using the metadata below."
 title: "Modeling adsorption of mobile organic compounds on activated carbon and biochar using machine learning"
 type: software
 authors:
-  - family-names: "Saeidi"
-    given-names: "Navid"
+Navid Saeidi, David J. Vicente, Sampriti Chaudhuri, and Anett Georgi
 repository-code: "https://github.com/NaviddSaeidii/ML-for-mobile-organic-compounds-adsorption-on-AC-BC"
 abstract: "Code and data for interpretable machine-learning modeling of adsorption of mobile organic compounds on activated carbon and biochar."
 keywords:
