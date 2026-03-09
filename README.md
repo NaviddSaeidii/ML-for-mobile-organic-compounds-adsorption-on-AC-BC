@@ -81,7 +81,7 @@ The repository also includes a separate prediction utility for applying the trai
   Prediction script that reads descriptor values from an Excel file, applies the same feature engineering used in the training workflow, and writes predicted log Kd values back into the Excel file.
 
 - `Prediction_Input_Template.xlsx`  
-  Input template for prediction. The user can enter descriptor values for a single case (one row) or for multiple cases (multiple rows). The script writes the predicted `log Kd (L/kg)` values into column M of the same file and also creates a backup copy before overwriting the file.
+  Input template for prediction. The user can enter descriptor values for a single case (one row) or for multiple cases (multiple rows). The script writes the predicted `log Kd (L/kg)` values into column M of the same file and also creates a backup copy before overwriting the file. The file contains one row of data as an example.
 
 When `rf_predict_logKd_excel_inplace.py` is run for the first time, it trains the Random Forest model from `cleaned_with_deltaPZCpH_no planar.xlsx` and saves the fitted model, scaler, and feature list as `.joblib` files in the repository folder. Later runs reuse these saved files unless retraining is requested.
 
