@@ -11,7 +11,7 @@ authors:
     given-names: "Sampriti"
   - family-names: "Georgi"
     given-names: "Anett"
-repository-code: "https://github.com/NaviddSaeidii/ML-for-mobile-organic-compounds-adsorption-on-AC-BC"
+repository-code: "https://github.com/NaviddSaeidi/ML-for-mobile-organic-compounds-adsorption-on-AC-BC"
 abstract: "Code and data for interpretable machine-learning modeling of adsorption of mobile organic compounds on activated carbon and biochar."
 keywords:
   - adsorption
