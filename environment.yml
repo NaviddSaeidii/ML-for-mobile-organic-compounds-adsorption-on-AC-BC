@@ -1,15 +1,12 @@
-name: adsorption-ml
+name: ml-adsorption
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
-  - numpy
+  - python=3.11
   - pandas
-  - matplotlib
-  - seaborn
+  - numpy
   - scikit-learn
-  - shap
-  - joblib
   - openpyxl
-  - jupyterlab
+  - joblib
+  - matplotlib
   - pip
