@@ -9,4 +9,6 @@ dependencies:
   - openpyxl
   - joblib
   - matplotlib
+  - seaborn
+  - shap
   - pip
