@@ -53,7 +53,7 @@ A conda environment can be created from:
 conda env create -f environment.yml
 conda activate ml-adsorption
 
-Usage
+## Usage
 1. Run model workflow with CSV input
 Use:
 python run_single_csv.py
