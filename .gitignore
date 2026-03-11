@@ -1,16 +1,33 @@
+# Python
 __pycache__/
 *.py[cod]
-*.so
-.venv/
-env/
-venv/
+*$py.class
+
+# Jupyter
 .ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
 .DS_Store
-*.log
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# Cache and test
+.pytest_cache/
+.mypy_cache/
+
+# Temporary files
 *.tmp
-*.bak
-*.backup.xlsx
-ml_manuscript_si_outputs/
-rf_model_seed42_no_impute.joblib
-scaler_seed42_no_impute.joblib
-feature_names_seed42_no_impute.joblib
+*.temp
