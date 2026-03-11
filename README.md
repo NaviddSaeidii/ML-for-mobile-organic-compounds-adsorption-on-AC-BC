@@ -55,7 +55,7 @@ conda activate ml-adsorption
 ```
 
 ## Usage
-Usage
+
 1. Run model workflow with CSV input
 
 Use:
