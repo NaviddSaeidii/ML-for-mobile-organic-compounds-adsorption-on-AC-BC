@@ -60,11 +60,11 @@ conda activate ml-adsorption
 
 Use:
 
-python run_single_csv.py
+`python run_single_csv.py`
 
 This script works with:
 
-merged_train_external.csv
+`merged_train_external.csv`
 
 Please keep the script and CSV file in the same folder, or adapt the file path in the script.
 
@@ -72,13 +72,13 @@ Please keep the script and CSV file in the same folder, or adapt the file path i
 
 Use:
 
-python rf_predict_logKd_excel.py --train
+`python rf_predict_logKd_excel.py --train`
 
 This script uses:
 
-Prediction_Input_Template.xlsx as input template
+`Prediction_Input_Template.xlsx` as input template
 
-merged_train_external.csv as training dataset
+`merged_train_external.csv` as training dataset
 
 Please keep these files in the same folder as the script, or adapt the file paths if needed. The input Excel file can be filled for one set of data or for multiple-row inputs. The first row is filled as an example.
 
@@ -86,13 +86,13 @@ Please keep these files in the same folder as the script, or adapt the file path
 
 The file `SI_Excel_compounds and adsorption info.xlsx` is included as supplementary data associated with the manuscript.
 
-Notes
+## Notes
 
 Only the files listed above are included in this GitHub version.
 
 File paths may need to be adapted depending on the local execution environment.
 
-Citation
+## Citation
 
 Please cite the associated manuscript if you use these files.
 
