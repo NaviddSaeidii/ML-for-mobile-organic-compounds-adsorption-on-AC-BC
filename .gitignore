@@ -31,3 +31,8 @@ dist/
 # Temporary files
 *.tmp
 *.temp
+
+# Generated outputs
+ml_manuscript_si_outputs/
+*.joblib
+*.backup.xlsx
