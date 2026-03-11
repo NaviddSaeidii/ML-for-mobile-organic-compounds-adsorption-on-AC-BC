@@ -51,7 +51,7 @@ A conda environment can be created from:
 
 ```bash
 conda env create -f environment.yml
-conda activate ml-adsorption
+conda activate ml-adsorption```
 
 ## Usage
 1. Run model workflow with CSV input
