@@ -84,7 +84,7 @@ Please keep these files in the same folder as the script, or adapt the file path
 
 3. Supplementary information
 
-The file SI_Excel_compounds and adsorption info.xlsx is included as supplementary data associated with the manuscript.
+The file `SI_Excel_compounds and adsorption info.xlsx` is included as supplementary data associated with the manuscript.
 
 Notes
 
@@ -96,4 +96,4 @@ Citation
 
 Please cite the associated manuscript if you use these files.
 
-In addition, repository citation metadata is provided in CITATION.cff.
+In addition, repository citation metadata is provided in `CITATION.cff`.
