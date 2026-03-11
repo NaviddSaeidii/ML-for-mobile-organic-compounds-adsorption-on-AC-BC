@@ -1,4 +1,4 @@
-## ML for mobile organic compounds adsorption on AC/BC
+# ML for mobile organic compounds adsorption on AC/BC
 
 This repository contains the files required to reproduce the prediction workflow associated with the manuscript on adsorption of mobile organic compounds on activated carbon (AC) and biochar (BC).
 
