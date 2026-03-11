@@ -5,20 +5,20 @@ This repository contains the files required to reproduce the prediction workflow
 The GitHub version of this repository includes only the files intended for public sharing:
 
 1. `run_single_csv.py` together with `merged_train_external.csv`
-2. `rf_predict_logKd_excel.py` together with `Prediction_Input_Template.xlsx`
+2. `rf_predict_logKd_excel.py` together with `Prediction_Input_Template.xlsx`and `merged_train_external.csv` 
 3. `SI_Excel_compounds and adsorption info.xlsx`
 
 ## Repository contents
 
 - `run_single_csv.py`  
-  Script for training and evaluating the Random Forest model using the provided CSV dataset.
+  Script for training and evaluating ML models and detailed analysis on Random Forest model using the provided CSV dataset.
 
 - `merged_train_external.csv`  
   CSV dataset used together with `run_single_csv.py`.
 
 - `rf_predict_logKd_excel.py`  
   Script for predicting logKd values from Excel input data.  
-  In this repository version, the default training dataset is set to `merged_train_external.csv`.
+  In this repository version, the training dataset is set to `merged_train_external.csv`.
 
 - `Prediction_Input_Template.xlsx`  
   Excel template for user input when running `rf_predict_logKd_excel.py`.
@@ -72,25 +72,19 @@ python rf_predict_logKd_excel.py
 
 This script uses:
 
-Prediction_Input_Template.xlsx as input template
+Prediction_Input_Template.xlsx as input template and merged_train_external.csv as default training dataset
 
-merged_train_external.csv as default training dataset
-
-Please keep these files in the same folder as the script, or adapt the file paths if needed.
+Please keep these files in the same folder as the script, or adapt the file paths if needed. The input excel file can be filled for one set of data (one row) for prediction or for multiple row inputs. The first row was filled as an example.
 
 3. Supplementary information
 
 The file:
 
-SI_Excel_compounds and adsorption info.xlsx
-
-is included as supplementary data associated with the manuscript.
+SI_Excel_compounds and adsorption info.xlsx is included as supplementary data associated with the manuscript.
 
 Notes
 
 Only the files listed above are included in this GitHub version.
-
-Other working documents, manuscript drafts, and additional internal files were intentionally excluded from the public repository.
 
 File paths may need to be adapted depending on the local execution environment.
 
