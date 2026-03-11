@@ -61,14 +61,14 @@ python run_single_csv.py
 This script works with:
 merged_train_external.csv
 Please keep the script and CSV file in the same folder, or adapt the file path in the script.
-2. Predict logKd from Excel input
+3. Predict logKd from Excel input
 Use:
 python rf_predict_logKd_excel.py --train
 This script uses:
 Prediction_Input_Template.xlsx as input template
 merged_train_external.csv as training dataset
 Please keep these files in the same folder as the script, or adapt the file paths if needed. The input Excel file can be filled for one set of data or for multiple-row inputs. The first row is filled as an example.
-3. Supplementary information
+4. Supplementary information
 The file SI_Excel_compounds and adsorption info.xlsx is included as supplementary data associated with the manuscript.
 Notes
 Only the files listed above are included in this GitHub version.
