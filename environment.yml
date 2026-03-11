@@ -1,3 +1,5 @@
+`environment.yml`
+```yaml
 name: ml-adsorption
 channels:
   - conda-forge
