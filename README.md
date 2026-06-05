@@ -85,6 +85,28 @@ Please keep these files in the same folder as the script, or adapt the file path
 3. Supplementary information
 
 The file `SI_Excel_compounds and adsorption info.xlsx` is included as supplementary data associated with the manuscript.
+## Additional analyses added during manuscript revision
+
+In response to reviewer comments, additional validation and diagnostic analyses were added in the script:
+
+`revision_additional_analyses.py`
+
+This script reproduces the supplementary analyses reported in the revised manuscript and Supporting Information, including:
+
+- mean bias error (MBE) for the random held-out test set and independent evaluation set
+- standard 10-fold Random Forest cross-validation
+- compound-grouped 10-fold cross-validation using `GroupKFold`
+- PFAS vs. non-PFAS subset performance metrics
+- Mahalanobis-distance applicability-domain analysis for the independent evaluation set
+- limited SVR hyperparameter sensitivity check
+- optional SHAP dependence plot for `delta_PZCpH`
+
+### How to run
+
+Place the following files in the same folder as the script:
+
+- `merged_train_external.csv`
+- `SI_Excel_compounds and adsorption info.xlsx`
 
 ## Notes
 
