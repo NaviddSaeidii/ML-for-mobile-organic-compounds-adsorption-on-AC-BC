@@ -107,6 +107,8 @@ Place the following files in the same folder as the script:
 
 - `merged_train_external.csv`
 - `SI_Excel_compounds and adsorption info.xlsx`
+and run:
+python revision_additional_analyses.py
 
 ## Notes
 
